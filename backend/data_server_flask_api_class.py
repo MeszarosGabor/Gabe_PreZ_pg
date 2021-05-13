@@ -1,9 +1,9 @@
 """
-PreziMetadata  Service implementaton.
+PreziMetadata Flask Service implementaton.
 """
 
 import json
-
+from datetime import datetime
 from flask import request
 from flask_restful import Resource
 
@@ -22,8 +22,10 @@ class PreziMetadata(Resource):
         """ Loads datasource. """
         with open(self.data_source, 'r') as handle:
             self.json_data = json.load(handle)
-        self.sorted_json_data = sorted(self.json_data,
-                                       key=lambda entry: entry['createdAt'])
+        self.sorted_json_data =\
+            sorted(self.json_data,
+                   key=lambda entry: datetime.strptime(entry['createdAt'],
+                                                       "%B %d, %Y"))
     # end initialize()
 
     def get(self):
@@ -34,13 +36,20 @@ class PreziMetadata(Resource):
         """
         title = request.args.get('title', '')
         is_sorted = request.args.get('sorted', False)
-        print(request.args)
+        desc = request.args.get('desc', False)
+
+        # Returning all entries
         if not title:
             if is_sorted:
+                if desc:
+                    return self.sorted_json_data[::-1]
                 return self.sorted_json_data
             return self.json_data
+
+        # Returning entries matching the title (no sorting)
+        hits = []
         for entry in self.json_data:
             if entry['title'] == title:
-                return entry
-        return {'result': 'not found'}
+                hits.append(entry)
+        return hits
     # end get()
