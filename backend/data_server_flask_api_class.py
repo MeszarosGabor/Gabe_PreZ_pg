@@ -4,12 +4,8 @@ PreziMetadata  Service implementaton.
 
 import json
 
-from flask import Flask, request
-from flask_restful import Api, Resource
-
-
-app = Flask(__name__)
-api = Api(app)
+from flask import request
+from flask_restful import Resource
 
 
 class PreziMetadata(Resource):
@@ -48,12 +44,3 @@ class PreziMetadata(Resource):
                 return entry
         return {'result': 'not found'}
     # end get()
-
-
-api.add_resource(PreziMetadata,
-                 "/search",
-                 "/search/",
-                 )
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=18871, debug=True)
