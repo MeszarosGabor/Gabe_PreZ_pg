@@ -3,6 +3,7 @@ PreziMetadata Flask Service implementaton.
 """
 
 import json
+import os
 from datetime import datetime
 from flask import request
 from flask_restful import Resource
@@ -10,8 +11,11 @@ from flask_restful import Resource
 
 class PreziMetadata(Resource):
     """ Metadata service implementation. """
-    def __init__(self, data_source='../data_source/prezis.json'):
-        self.data_source = data_source
+    DEFAULT_SOURCE = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                  '..', 'data_source', 'prezis.json')
+
+    def __init__(self, data_source=None):
+        self.data_source = data_source if data_source else self.DEFAULT_SOURCE
         self.json_data = None
         self.sorted_json_data = None  # only sort it once
 
