@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head> 
+    <meta charset="utf-8">
+    <title>PreziMetadata</title>
+  </head>
+  <body>
+  <div>
+    <form action="http://0.0.0.0:18871/search/?title=title">
+      <label for="title">Search by Title:</label>
+      <input type="text" id="title" name="title"><br><br>
+      <input type="submit" value="Find Title">
+    </form>
+  </div>
+  <div>
+    <form action="http://0.0.0.0:18871/search/?sorted=sorted">
+      <p>
+      <input type="submit" value="List All Entries">
+      <label for="sorted">Sorted Results:</label>
+      <input type="checkbox" id="sorted" name="sorted"><br><br>
+      </p>
+    </form>
+  </div>
+  
+  </body>
+  <script src="script.js"></script>
+</html>
